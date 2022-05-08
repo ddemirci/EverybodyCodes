@@ -13,11 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EverybodyCodes.Contracts\EverybodyCodes.Contracts.csproj" />
     <ProjectReference Include="..\EverybodyCodes.Data\EverybodyCodes.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\EverybodyCodes.Services\EverybodyCodes.Services.csproj" />
   </ItemGroup>
 
 </Project>

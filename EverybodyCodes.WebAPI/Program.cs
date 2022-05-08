@@ -1,6 +1,8 @@
+using EverybodyCodes.Contracts;
 using EverybodyCodes.Data;
 using EverybodyCodes.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using EverybodyCodes.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,9 @@ builder.Services.AddDbContext<CameraDetailsContext>(x => x.UseInMemoryDatabase("
 // Configuring Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Service methods registration
+builder.Services.AddTransient<ICameraService, CameraService>();
 
 var app = builder.Build();
 
