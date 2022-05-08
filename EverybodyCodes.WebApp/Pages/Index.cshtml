@@ -1,9 +1,266 @@
 ﻿@page
 @model IndexModel
 @{
-
+    var firstGroup = Model.IndexCameraModel.Cameras.Where(x => x.GroupNumber == 1);
+    var secondGroup = Model.IndexCameraModel.Cameras.Where(x => x.GroupNumber == 2);
+    var thirdGroup = Model.IndexCameraModel.Cameras.Where(x => x.GroupNumber == 3);
+    var fourthGroup = Model.IndexCameraModel.Cameras.Where(x => x.GroupNumber == 4);
 }
 
-<div class="text-center">
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Infi | Security cameras Utrecht</title>
+    <link rel="icon" type="image/x-icon" href="video-camera-icon.png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.8em;
+        }
 
-</div>
+        a {
+            color: #ff6e00;
+        }
+
+        table td {
+            vertical-align: top;
+        }
+
+        table thead tr:nth-child(1) th {
+            height: 75px;
+            background-color: #272727;
+            color: #7F7F7C;
+            font-size: 3.0em;
+        }
+
+        table tr:nth-child(2) th {
+            text-align: left;
+            height: 25px;
+        }
+
+        h1 {
+            padding: 20px 0 20px 55px;
+            margin: 0 0 0 20px;
+            background: url("video-camera-icon.png") no-repeat;
+            background-size: 40px;
+            background-position: 0 50%;
+        }
+
+        #cameraTableContainer {
+            margin: 0 0 20px 0;
+            width: 100%;
+            padding: 0 20px;
+            height: 100%;
+            vertical-align: top;
+        }
+
+        #cameraTableContainer > td {
+            width: 25%;
+            text-align: center;
+        }
+
+        #cameraTableContainer table {
+            width: 450px;
+            margin: auto;
+            height: 100%;
+            border-collapse: collapse;
+        }
+
+       #cameraTableContainer table tbody tr {
+           height: 25px;
+           vertical-align: middle;
+       }
+
+       #cameraTableContainer table tbody td {
+           padding: 5px 0;
+       }
+
+       #cameraTableContainer table td:nth-child(1) {
+           height: 15px !important;
+           margin-right: 15px;
+           font-weight: bold;
+           border-radius: 20px;
+       }
+
+       #cameraTableContainer table tr:last-child td {
+           height: 100%;
+       }
+
+        #map {
+            margin: 0 10em;
+            height: 500px;
+            width: 100%;
+        }
+
+        .container {
+            margin: 0 10px
+        }
+
+        .highlighted{
+            color: red;
+        }
+
+    </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+</head>
+
+<body>
+    <h1>Security cameras in Utrecht</h1>
+    <div id="map"></div>
+    <main>
+        <table id="cameraTableContainer">
+            <tbody>
+                <tr>
+                    <td>
+                        <table id="column3">
+                            <thead>
+                                <tr>
+                                    <th colspan="4">Cameras 3</th>
+                                </tr>
+                                <tr>
+                                    <th>Number</th>
+                                    <th>Name</th>
+                                    <th>Latitude</th>
+                                    <th>Longitude</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var camera in firstGroup)
+                                {
+                                    <tr class="camera-entry" id=@camera.CameraId>
+                                        <td>@camera.CameraId</td>
+                                        <td>@camera.CameraName</td>
+                                        <td>@camera.Latitude</td>
+                                        <td>@camera.Longitude</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table id="column5">
+                            <thead>
+                                <tr>
+                                    <th colspan="4">Cameras 5</th>
+                                </tr>
+                                <tr>
+                                    <th>Number</th>
+                                    <th>Name</th>
+                                    <th>Latitude</th>
+                                    <th>Longitude</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var camera in secondGroup)
+                                {
+                                    <tr class="camera-entry" id=@camera.CameraId>
+                                        <td>@camera.CameraId</td>
+                                        <td>@camera.CameraName</td>
+                                        <td>@camera.Latitude</td>
+                                        <td>@camera.Longitude</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table id="column15">
+                            <thead>
+                                <tr>
+                                    <th colspan="4">Cameras 3 &amp; 5</th>
+                                </tr>
+                                <tr>
+                                    <th>Number</th>
+                                    <th>Name</th>
+                                    <th>Latitude</th>
+                                    <th>Longitude</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var camera in thirdGroup)
+                                {
+                                    <tr class="camera-entry" id=@camera.CameraId>
+                                        <td>@camera.CameraId</td>
+                                        <td>@camera.CameraName</td>
+                                        <td>@camera.Latitude</td>
+                                        <td>@camera.Longitude</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table id="columnOther">
+                            <thead>
+                                <tr>
+                                    <th colspan="4">Cameras Overig</th>
+                                </tr>
+                                <tr>
+                                    <th>Number</th>
+                                    <th>Name</th>
+                                    <th>Latitude</th>
+                                    <th>Longitude</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var camera in fourthGroup)
+                                {
+                                    <tr class="camera-entry" id=@camera.CameraId>
+                                        <td>@camera.CameraId</td>
+                                        <td>@camera.CameraName</td>
+                                        <td>@camera.Latitude</td>
+                                        <td>@camera.Longitude</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
+
+<script type="text/javascript">
+    var myIcon = L.icon({
+        iconUrl: 'img/video-camera-icon.png',
+        iconSize: [25, 25],
+        iconAnchor: [25, 25]
+    });
+
+    var map = L.map('map').setView([52.0914, 5.1115], 13);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
+    {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: '@Model.MapBoxAccessToken'
+    }).addTo(map);
+
+    @foreach (var x in Model.IndexCameraModel.Cameras)
+    {
+        <text>
+                var marker = L.marker([@x.Latitude, @x.Longitude],{icon: myIcon});
+                $(marker).on('click', function(){
+                    highlightItem(@x.CameraId);
+                    alert('@x.CameraName');
+                });
+                marker.addTo(map);
+        </text>
+    }
+
+    function highlightItem(id){
+        $('.camera-entry').removeClass('highlighted');
+        $('#'+ id).addClass('highlighted');
+    }
+
+</script>
