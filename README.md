@@ -1,5 +1,6 @@
 # EverybodyCodes
 The solution contains five projects. .NET 6 was used.
+The second and the third parts are completed in the requested timebox.
 
 # To start the application
 1) EverybodyCodes.WebAPI and EverybodyCodes.WebApp should be started respectively. WebAPI project initalizes an in-memory database that is filled from **EverybodyCodes/EverybodyCodes.WebAPI/DataSource/cameras-defb.csv**
